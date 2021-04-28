@@ -6,4 +6,6 @@
 - écrire les fonctions suivantes: ft_strlen, ft_strcpy, ft_strcmp, ft_write, ft_read, ft_strdup.
 - Verifier les erreurs lors des syscalls et les renvoyer correctement.
 
-## Mot-clef
+## Documentation
+
+
