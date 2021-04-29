@@ -9,3 +9,6 @@
 ## Documentation
 
 [x86-64 Assembly Language Programming with Ubuntu](https://github.com/raphifou15/libasm/blob/main/assembly64.pdf)
+
+[Le modèle d'architecture de von Neumann](https://interstices.info/le-modele-darchitecture-de-von-neumann/)
+
