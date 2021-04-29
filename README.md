@@ -12,3 +12,4 @@
 
 [Le modèle d'architecture de von Neumann](https://interstices.info/le-modele-darchitecture-de-von-neumann/)
 
+[So Why Does Everyone Have It Backwards?](https://www.section.io/engineering-education/what-is-little-endian-and-big-endian/#:~:text=Specifically%2C%20little%2Dendian%20is%20when,first%20(the%2012%20part).)
