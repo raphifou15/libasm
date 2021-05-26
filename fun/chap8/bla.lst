@@ -1,0 +1,50 @@
+     1                                  	global	main
+     2                                  	extern	printf
+     3                                  
+     4                                  	section	.data
+     5                                  		
+     6 00000000 020000000A000000FB-     		tab		dd		2, 10, -5, 34, 0
+     6 00000009 FFFFFF220000000000-
+     6 00000012 0000               
+     7 00000014 25640A00                		mes		db		"%d", 10, 0
+     8                                  
+     9                                  main:
+    10 00000018 4831C0                  	xor		rax, rax
+    11 0000001B 4831DB                  	xor		rbx, rbx
+    12 0000001E 4831F6                  	xor		rsi, rsi
+    13 00000021 48BB-                   	mov		rbx, tab
+    13 00000023 [0000000000000000] 
+    14 0000002B B904000000              	mov		rcx, 4
+    15                                  loop_1:
+    16 00000030 4D31C0                  	xor		r8, r8
+    17 00000033 448B04B3                	mov		r8d, [rbx + rsi * 4]
+    18 00000037 443B44B304              	cmp		r8d, [rbx + rsi * 4 + 4]
+    19 0000003C 7E1A                    	jle		next
+    20 0000003E 8B04B3                  	mov		eax, [rbx + rsi * 4]
+    21 00000041 448B44B304              	mov		r8d, [rbx + rsi * 4 + 4]
+    22 00000046 448904B3                	mov		[rbx + rsi * 4], r8d
+    23 0000004A 8944B304                	mov		[rbx + rsi * 4 + 4], eax
+    24 0000004E B905000000              	mov		rcx, 5
+    25 00000053 BEFFFFFFFF              	mov		esi, -1
+    26                                  next:
+    27 00000058 83C601                  	add		esi, 1
+    28 0000005B E2D3                    	loop	loop_1
+    29 0000005D 4831DB                  	xor		rbx, rbx
+    30 00000060 B905000000              	mov		rcx, 5
+    31                                  print:
+    32 00000065 4831C0                  	xor		rax, rax
+    33 00000068 4831F6                  	xor		rsi, rsi
+    34 0000006B 48BF-                   	mov		rdi, mes
+    34 0000006D [1400000000000000] 
+    35 00000075 8B349D[00000000]        	mov		esi, [tab + rbx * 4]
+    36 0000007C 53                      	push	rbx
+    37 0000007D 51                      	push	rcx
+    38 0000007E 4883EC08                	sub		rsp, 8
+    39 00000082 E8(00000000)            	call	printf
+    40 00000087 4883C408                	add		rsp, 8
+    41 0000008B 59                      	pop		rcx
+    42 0000008C 5B                      	pop		rbx
+    43 0000008D 4883C301                	add		rbx, 1
+    44 00000091 E2D2                    	loop	print
+    45                                  end:
+    46 00000093 C3                      	ret

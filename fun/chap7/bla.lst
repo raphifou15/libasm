@@ -1,0 +1,28 @@
+     1                                  	global	main
+     2                                  	extern	printf
+     3                                  	extern	atoi
+     4                                  	
+     5                                  	section	.text
+     6 00000000 256C640A00              		message	db	"%ld", 10, 0
+     7                                  main:
+     8 00000005 4883C608                	add		rsi, 8
+     9 00000009 488B3E                  	mov		rdi, [rsi]
+    10 0000000C E8(00000000)            	call	atoi
+    11 00000011 4863C8                  	movsxd	rcx, eax
+    12 00000014 B800000000              	mov		rax, 0
+    13 00000019 4883F900                	cmp		rcx, 0
+    14 0000001D 7E22                    	jle		end
+    15                                  
+    16                                  next:
+    17 0000001F 4801C8                  	add		rax, rcx
+    18 00000022 E2FB                    	loop	next
+    19 00000024 48F7E8                  	imul	rax
+    20 00000027 4889C6                  	mov		rsi, rax
+    21 0000002A 48BF-                   	mov		rdi, message
+    21 0000002C [0000000000000000] 
+    22 00000034 4883EC08                	sub		rsp, 8
+    23 00000038 E8(00000000)            	call	printf
+    24 0000003D 4883C408                	add		rsp, 8
+    25                                  end:
+    26 00000041 C3                      	ret
+    27                                  

@@ -1,0 +1,19 @@
+     1                                  	global	main
+     2                                  	extern	printf
+     3                                  
+     4                                  	section .data
+     5 00000000 25640A00                		message		db	"%d", 10, 0
+     6                                  	section	.text
+     7                                  
+     8                                  main:
+     9 00000000 B90A000000              	mov		rcx, 10
+    10                                  next:
+    11 00000005 4831C0                  	xor		rax, rax
+    12 00000008 48BF-                   	mov		rdi, message
+    12 0000000A [0000000000000000] 
+    13 00000012 4889CE                  	mov		rsi, rcx
+    14 00000015 51                      	push	rcx
+    15 00000016 E8(00000000)            	call	printf
+    16 0000001B 59                      	pop		rcx
+    17 0000001C E2E7                    	loop	next
+    18 0000001E C3                      	ret
