@@ -1,0 +1,83 @@
+     1                                  		global	main
+     2                                  		extern	printf
+     3                                  		extern	puts
+     4                                  		section .data
+     5 00000000 25640A00                			mes		db		"%d", 10, 0
+     6 00000004 0A000000                			elem	dd		10
+     7 00000008 00000000                			sign	dd		0
+     8 0000000C 6572726F7200            			mes_error	db	"error", 0
+     9                                  		section	.bss
+    10 00000000 <res 00000004>          			num		resd	1
+    11                                  		section	text
+    12                                  main:								; check argc
+    13 00000000 B802000000              	mov		rax, 2					; rax = 2
+    14 00000005 4839C7                  	cmp		rdi, rax				; if (rdi - rax)
+    15 00000008 0F85B7000000            	jne		end						; if (rdi != 2) ? end : continue
+    16 0000000E 4883C608                	add		rsi, 8					; add 8 to rsp to go to the next adress, (line) rsi += 8
+    17 00000012 488B1E                  	mov		rbx, [rsi]				; mov address [rsi] (value) rsi is a double tab
+    18 00000015 B900000000              	mov		rcx, 0					; rcx = 0
+    19 0000001A 890C25[00000000]        	mov		dword [num], ecx		; num = 0
+    20                                  
+    21                                  check_begin:
+    22 00000021 803C0B2B                	cmp		byte [rbx + rcx], 43	; (rsi[1][x] - 43)
+    23 00000025 0F849B000000            	je		sign_plus				; jump sign_plus
+    24                                  
+    25                                  check_begin_2:
+    26 0000002B 803C0B2D                	cmp		byte [rbx + rcx], 45	; (rsi[1][x] - 45)
+    27 0000002F 0F8499000000            	je		sign_minus				; jump sign_minus
+    28                                  
+    29                                  loop:
+    30 00000035 4831C0                  	xor		rax, rax				; rax = 0
+    31 00000038 803C0B00                	cmp		byte [rbx + rcx], 0		; (rsi[1][x] - 0)
+    32 0000003C 7447                    	je		number_sign				; if (rsi[1][x] == 0) ? number_sign : continue
+    33 0000003E 803C0B30                	cmp		byte [rbx + rcx], 48	; (rsi[1][x] - 48)
+    34 00000042 0F8C95000000            	jl		error					; (rsi[1][x] < 48) ? error: continue
+    35 00000048 803C0B3A                	cmp		byte [rbx + rcx], 58	; (rsi[1][x] - 48)
+    36 0000004C 0F8F8B000000            	jg		error					; (rsi[1][x] > 48) ? error: continue
+    37 00000052 8B0425[00000000]        	mov		eax, dword [num]		; eax = num
+    38 00000059 F72425[04000000]        	mul		dword [elem]			; eax * elem(10)
+    39 00000060 890425[00000000]        	mov		dword [num], eax		; num = eax
+    40 00000067 4831C0                  	xor		rax, rax				; rax = 0
+    41 0000006A 8A040B                  	mov		al, byte [rbx + rcx]	; al = rsi[1][x]
+    42 0000006D 2C30                    	sub		al, 48					; al -= 48
+    43 0000006F 0FB6C0                  	movzx	eax, al					; eax = al
+    44 00000072 030425[00000000]        	add		eax, dword [num]		; eax = eax + num
+    45 00000079 890425[00000000]        	mov		dword [num], eax		; num = eax
+    46 00000080 48FFC1                  	inc		rcx						; rcx++
+    47 00000083 EBB0                    	jmp		loop					; jump loop
+    48                                  
+    49                                  number_sign:
+    50 00000085 4831C0                  	xor		rax, rax				; xar = 0
+    51 00000088 390425[08000000]        	cmp		dword [sign], eax		; (sign - 0)
+    52 0000008F 7410                    	je		print					; (sign == 0) ? print : continue
+    53 00000091 8B0425[00000000]        	mov		eax, dword [num]		; eax = num
+    54 00000098 F7D8                    	neg		eax						; eax = -eax
+    55 0000009A 890425[00000000]        	mov		dword [num], eax		; num = eax
+    56                                  
+    57                                  print:
+    58 000000A1 4831C0                  	xor		rax, rax
+    59 000000A4 4831F6                  	xor		rsi, rsi
+    60 000000A7 48BF-                   	mov		rdi, mes
+    60 000000A9 [0000000000000000] 
+    61 000000B1 8B3425[00000000]        	mov		esi, dword [num]
+    62 000000B8 4883EC08                	sub		rsp, 8
+    63 000000BC E8(00000000)            	call	printf
+    64 000000C1 4883C408                	add		rsp, 8
+    65                                  
+    66                                  end:								; fin du programme
+    67 000000C5 C3                      	ret
+    68                                  
+    69                                  sign_plus:
+    70 000000C6 48FFC1                  	inc		rcx						; rcx++
+    71 000000C9 E953FFFFFF              	jmp		check_begin				; jump check_begin_2
+    72                                  
+    73                                  sign_minus:
+    74 000000CE 48FFC1                  	inc		rcx						; rcx++
+    75 000000D1 890C25[08000000]        	mov		dword [sign], ecx		; sign = 1
+    76 000000D8 E944FFFFFF              	jmp		check_begin				; jump loop
+    77                                  
+    78                                  error:
+    79 000000DD 48BF-                   	mov		rdi, mes_error
+    79 000000DF [0C00000000000000] 
+    80 000000E7 E8(00000000)            	call	puts
+    81 000000EC EBD7                    	jmp		end
