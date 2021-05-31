@@ -6,7 +6,7 @@
 /*   By: rkhelif <rkhelif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 14:02:00 by rkhelif           #+#    #+#             */
-/*   Updated: 2021/05/23 19:53:04 by rkhelif          ###   ########.fr       */
+/*   Updated: 2021/05/31 14:30:29 by rkhelif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv)
 		bzero(dest2, 10);
 		printf("-------------------------------------------------------------\n");
 	}
+
 	printf("ft_strcmp\n\n");
 	printf("%d\n", strcmp("raph", "raph"));
 	printf("%d\n", ft_strcmp("raph", "raph"));

@@ -13,3 +13,5 @@
 [Le modèle d'architecture de von Neumann](https://interstices.info/le-modele-darchitecture-de-von-neumann/)
 
 [What Is Little-Endian And Big-Endian Byte Ordering?](https://www.section.io/engineering-education/what-is-little-endian-and-big-endian/#:~:text=Specifically%2C%20little%2Dendian%20is%20when,first%20(the%2012%20part).)
+
+[Voici la liste des instructions reconnus par le x86-64 :](https://www.gladir.com/CODER/ASM8086/x86-64.htm)

@@ -1,0 +1,140 @@
+     1                                  %macro	ft_putnbr_tab	2
+     2                                  	xor		rax, rax
+     3                                  	xor		rbx, rbx
+     4                                  	xor		rcx, rcx
+     5                                  	mov		r8, 10
+     6                                  	mov		rbx, %2
+     7                                  	mov		eax, dword [%1]
+     8                                  %%begin:
+     9                                  	cmp		eax, 0
+    10                                  	jge		%%next
+    11                                  	mov		byte [rbx], '-'
+    12                                  	inc		rbx
+    13                                  	neg		eax
+    14                                  %%next:
+    15                                  	xor		rdx, rdx
+    16                                  	cdq
+    17                                  	idiv	r8d
+    18                                  	push	rdx
+    19                                  	inc		rcx
+    20                                  	cmp		eax, 0
+    21                                  	jne		%%begin
+    22                                  %%loop_1:
+    23                                  	pop		rax
+    24                                  	add		rax, 48
+    25                                  	mov		byte [rbx], al
+    26                                  	inc		rbx
+    27                                  	loop	%%loop_1
+    28                                  	mov		byte [rbx], 0
+    29                                  %endmacro
+    30                                  
+    31                                  	global	main
+    32                                  	extern	printf
+    33                                  
+    34                                  	section		.data
+    35 00000000 00000000                		num_3	dd	0
+    36 00000004 4056FFFF                		num_2	dd	-43456
+    37 00000008 60A4FFFF                		num_1	dd	-23456
+    38 0000000C 25730A00                		mes		db	"%s", 10, 0
+    39                                  	section		.bss
+    40 00000000 <res 0000000A>          		line_1	resb	10
+    41                                  	section		.text
+    42                                  main:
+    43                                  	ft_putnbr_tab	num_1, line_1
+    43 00000000 4831C0              <1>  xor rax, rax
+    43 00000003 4831DB              <1>  xor rbx, rbx
+    43 00000006 4831C9              <1>  xor rcx, rcx
+    43 00000009 41B80A000000        <1>  mov r8, 10
+    43 0000000F 48BB-               <1>  mov rbx, %2
+    43 00000011 [0000000000000000]  <1>
+    43 00000019 8B0425[08000000]    <1>  mov eax, dword [%1]
+    43                              <1> %%begin:
+    43 00000020 83F800              <1>  cmp eax, 0
+    43 00000023 7D08                <1>  jge %%next
+    43 00000025 C6032D              <1>  mov byte [rbx], '-'
+    43 00000028 48FFC3              <1>  inc rbx
+    43 0000002B F7D8                <1>  neg eax
+    43                              <1> %%next:
+    43 0000002D 4831D2              <1>  xor rdx, rdx
+    43 00000030 99                  <1>  cdq
+    43 00000031 41F7F8              <1>  idiv r8d
+    43 00000034 52                  <1>  push rdx
+    43 00000035 48FFC1              <1>  inc rcx
+    43 00000038 83F800              <1>  cmp eax, 0
+    43 0000003B 75E3                <1>  jne %%begin
+    43                              <1> %%loop_1:
+    43 0000003D 58                  <1>  pop rax
+    43 0000003E 4883C030            <1>  add rax, 48
+    43 00000042 8803                <1>  mov byte [rbx], al
+    43 00000044 48FFC3              <1>  inc rbx
+    43 00000047 E2F4                <1>  loop %%loop_1
+    43 00000049 C60300              <1>  mov byte [rbx], 0
+    44                                  	ft_putnbr_tab	num_2, line_1
+    44 0000004C 4831C0              <1>  xor rax, rax
+    44 0000004F 4831DB              <1>  xor rbx, rbx
+    44 00000052 4831C9              <1>  xor rcx, rcx
+    44 00000055 41B80A000000        <1>  mov r8, 10
+    44 0000005B 48BB-               <1>  mov rbx, %2
+    44 0000005D [0000000000000000]  <1>
+    44 00000065 8B0425[04000000]    <1>  mov eax, dword [%1]
+    44                              <1> %%begin:
+    44 0000006C 83F800              <1>  cmp eax, 0
+    44 0000006F 7D08                <1>  jge %%next
+    44 00000071 C6032D              <1>  mov byte [rbx], '-'
+    44 00000074 48FFC3              <1>  inc rbx
+    44 00000077 F7D8                <1>  neg eax
+    44                              <1> %%next:
+    44 00000079 4831D2              <1>  xor rdx, rdx
+    44 0000007C 99                  <1>  cdq
+    44 0000007D 41F7F8              <1>  idiv r8d
+    44 00000080 52                  <1>  push rdx
+    44 00000081 48FFC1              <1>  inc rcx
+    44 00000084 83F800              <1>  cmp eax, 0
+    44 00000087 75E3                <1>  jne %%begin
+    44                              <1> %%loop_1:
+    44 00000089 58                  <1>  pop rax
+    44 0000008A 4883C030            <1>  add rax, 48
+    44 0000008E 8803                <1>  mov byte [rbx], al
+    44 00000090 48FFC3              <1>  inc rbx
+    44 00000093 E2F4                <1>  loop %%loop_1
+    44 00000095 C60300              <1>  mov byte [rbx], 0
+    45                                  	ft_putnbr_tab	num_2, line_1
+    45 00000098 4831C0              <1>  xor rax, rax
+    45 0000009B 4831DB              <1>  xor rbx, rbx
+    45 0000009E 4831C9              <1>  xor rcx, rcx
+    45 000000A1 41B80A000000        <1>  mov r8, 10
+    45 000000A7 48BB-               <1>  mov rbx, %2
+    45 000000A9 [0000000000000000]  <1>
+    45 000000B1 8B0425[04000000]    <1>  mov eax, dword [%1]
+    45                              <1> %%begin:
+    45 000000B8 83F800              <1>  cmp eax, 0
+    45 000000BB 7D08                <1>  jge %%next
+    45 000000BD C6032D              <1>  mov byte [rbx], '-'
+    45 000000C0 48FFC3              <1>  inc rbx
+    45 000000C3 F7D8                <1>  neg eax
+    45                              <1> %%next:
+    45 000000C5 4831D2              <1>  xor rdx, rdx
+    45 000000C8 99                  <1>  cdq
+    45 000000C9 41F7F8              <1>  idiv r8d
+    45 000000CC 52                  <1>  push rdx
+    45 000000CD 48FFC1              <1>  inc rcx
+    45 000000D0 83F800              <1>  cmp eax, 0
+    45 000000D3 75E3                <1>  jne %%begin
+    45                              <1> %%loop_1:
+    45 000000D5 58                  <1>  pop rax
+    45 000000D6 4883C030            <1>  add rax, 48
+    45 000000DA 8803                <1>  mov byte [rbx], al
+    45 000000DC 48FFC3              <1>  inc rbx
+    45 000000DF E2F4                <1>  loop %%loop_1
+    45 000000E1 C60300              <1>  mov byte [rbx], 0
+    46                                  print:
+    47 000000E4 4831C0                  	xor		rax, rax
+    48 000000E7 48BF-                   	mov		rdi, mes
+    48 000000E9 [0C00000000000000] 
+    49 000000F1 48BE-                   	mov		rsi, line_1
+    49 000000F3 [0000000000000000] 
+    50 000000FB 4883EC08                	sub		rsp, 8
+    51 000000FF E8(00000000)            	call	printf
+    52 00000104 4883C408                	add		rsp, 8
+    53                                  end:
+    54 00000108 C3                      	ret

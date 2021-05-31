@@ -1,0 +1,89 @@
+     1                                  	global	stats2
+     2                                  	extern	ft_sort
+     3                                  	section	.text
+     4                                  
+     5                                  ; -----------------------------------------------------------
+     6                                  ;ft_sort:
+     7                                  ; prologue ft_sort receive adrress list in rdi and len in rsi
+     8                                  ; lets go
+     9                                  ;	push	rbx
+    10                                  ;	xor		rbx, rbx		; rbx = 0
+    11                                  ;	xor		rax, rax		; receive value
+    12                                  ;	xor		rcx, rcx		; couter
+    13                                  ;	sub		rsi, 1			; the last elem is rsi - 1
+    14                                  ;loop_1:
+    15                                  ;	mov		eax, dword [rdi + rcx * 4]
+    16                                  ;	inc		rcx
+    17                                  ;	cmp		eax, dword [rdi + rcx * 4]
+    18                                  ;	jg		change_value
+    19                                  ;	cmp		rcx, rsi
+    20                                  ;	jne		loop_1
+    21                                  ;end:
+    22                                  ;	pop		rbx
+    23                                  ;	ret
+    24                                  
+    25                                  ;change_value:
+    26                                  ;	mov		eax, dword [rdi + rcx * 4]
+    27                                  ;	dec		rcx
+    28                                  ;	mov		ebx, dword [rdi + rcx * 4]
+    29                                  ;	mov		dword [rdi + rcx * 4], eax
+    30                                  ;	inc		rcx
+    31                                  ;	mov		dword [rdi + rcx * 4], ebx
+    32                                  ;	xor		rcx, rcx
+    33                                  ;	jmp		loop_1
+    34                                  ; ------------------------------------------------------------
+    35                                  
+    36                                  stats2:
+    37                                  ; prologue
+    38 00000000 55                      	push	rbp
+    39 00000001 53                      	push	rbx
+    40 00000002 52                      	push	rdx
+    41 00000003 51                      	push	rcx
+    42 00000004 4150                    	push	r8
+    43 00000006 4151                    	push	r9
+    44 00000008 E8(00000000)            	call	ft_sort
+    45 0000000D 48FFC6                  	inc		rsi
+    46 00000010 4159                    	pop		r9
+    47 00000012 4158                    	pop		r8
+    48 00000014 59                      	pop		rcx
+    49 00000015 5A                      	pop		rdx
+    50 00000016 5B                      	pop		rbx
+    51 00000017 5D                      	pop		rbp
+    52 00000018 55                      	push	rbp
+    53 00000019 4889E5                  	mov		rbp, rsp
+    54 0000001C 53                      	push	rbx
+    55                                  	;mov		rdi, rax
+    56 0000001D 4831DB                  	xor		rbx, rbx
+    57 00000020 4831C0                  	xor		rax, rax
+    58                                  ; return min is the first value of address
+    59 00000023 8B07                    	mov		eax, dword [rdi]
+    60 00000025 8902                    	mov		dword [rdx], eax
+    61                                  ; return max is the last value of address [rdi + rsi - 1 * 4]
+    62 00000027 48FFCE                  	dec		rsi
+    63 0000002A 8B04B7                  	mov		eax, dword [rdi + rsi * 4]
+    64 0000002D 48FFC6                  	inc		rsi
+    65 00000030 418900                  	mov		dword [r8], eax
+    66                                  ; return med the middle of the address because is ordered
+    67 00000033 41B802000000            	mov		r8, 2
+    68 00000039 428B0487                	mov		eax, dword [rdi + r8 * 4]
+    69 0000003D 8901                    	mov		dword [rcx], eax
+    70                                  ; return sum of the address
+    71 0000003F 4831C9                  	xor		rcx, rcx
+    72 00000042 4831C0                  	xor		rax, rax
+    73                                  loop_1:
+    74 00000045 03048F                  	add		eax, dword [rdi + rcx * 4]
+    75 00000048 48FFC1                  	inc		rcx
+    76 0000004B 4839F1                  	cmp		rcx, rsi
+    77 0000004E 75F5                    	jne		loop_1
+    78 00000050 418901                  	mov		dword [r9], eax
+    79                                  ; return average of the address
+    80 00000053 4831D2                  	xor		rdx, rdx
+    81 00000056 99                      	cdq
+    82 00000057 48F7FE                  	idiv	rsi
+    83 0000005A 488B5D10                	mov		rbx, [rbp + 16]
+    84 0000005E 8903                    	mov		dword [rbx], eax
+    85                                  end:
+    86 00000060 5B                      	pop		rbx
+    87 00000061 5D                      	pop		rbp
+    88 00000062 C3                      	ret
+    89                                  
