@@ -6,24 +6,24 @@
 /*   By: rkhelif <rkhelif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 14:02:00 by rkhelif           #+#    #+#             */
-/*   Updated: 2021/05/31 14:30:29 by rkhelif          ###   ########.fr       */
+/*   Updated: 2021/06/01 16:34:20 by rkhelif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include <strings.h>
 
-size_t	ft_strlen(const char *s);
-char	*ft_strcpy(char *dest, const char *src);
-int		ft_strcmp(const char *s1, const char *s2);
+#include "libasm.h"
 
 int	main(int argc, char **argv)
 {
+	int		rest;
 	int		count;
 	int		start;
 	char	dest[10];
 	char	dest2[10];
+	int		err;
+	int		fd;
+	char	buf[200];
+	char	*str;
 
 	start = argc;
 	count = -1;
@@ -59,5 +59,66 @@ int	main(int argc, char **argv)
 	printf("%d\n", strcmp("", ""));
 	printf("%d\n", ft_strcmp("", ""));
 	printf("-------------------------------------------------------------\n");
+
+	printf("\nft_write\n\n");
+
+	rest = write(-1, "taaaaaaaa",9);
+	err = errno;
+	errno = 0;
+	printf("%s\n", strerror(err));
+	printf("rest = %d\n", rest);
+	rest = ft_write(-1, "taaaaaaaa",9);
+	err = errno;
+	errno = 0;
+	printf("%s\n", strerror(err));
+	printf("rest = %d\n\n", rest);
+
+	rest = write(1, "ta",-1);
+	err = errno;
+	errno = 0;
+	printf("%s\n", strerror(err));
+	printf("rest = %d\n", rest);
+	rest = ft_write(1, "ta",-1);
+	err = errno;
+	errno = 0;
+	printf("%s\n", strerror(err));
+	printf("rest = %d\n", rest);
+	
+
+	printf("\n\nft_read\n\n");
+
+
+	fd = open("main.c", O_RDONLY);
+	ft_read(fd, buf, 199);
+	printf("%s\n", buf);
+	close(fd);
+	fd = open("main.c", O_RDONLY);
+	read(fd, buf, 199);
+	printf("%s\n", buf);
+	close(fd);
+
+	fd = open("main.c", O_RDONLY);
+	if (ft_read(250, buf, 100) < 0)
+		printf("%s\n", strerror(errno));
+
+	fd = open("main.c", O_RDONLY);
+	read(250, buf, 100);
+	printf("%s\n", strerror(errno));
+	
+	if (read(fd, NULL, 100) < 0)
+		printf("%s\n", strerror(errno));
+	if (ft_read(fd, NULL, 100) < 0)
+		printf("%s\n", strerror(errno));
+
+	printf("\nft_strdup\n\n");
+	
+	count = -1;
+	while (argc > ++count)
+	{
+		str = strdup(argv[count]);
+		printf("%s\n", str);
+		free(str);
+		str = NULL;
+	}
 	return (0);
 }
