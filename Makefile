@@ -17,6 +17,7 @@ BONUS = ft_atoi_base.s \
 		ft_atoi_base_test.c
 
 OBJ = $(SRC:.s=.o)
+BONUS_OBJ =  $(BONUS:.s=.o) $(BONUS:.c=.o)
 
 all: $(NAME)
 
@@ -27,10 +28,14 @@ $(NAME) : $(OBJ)
 .s.o:
 	$(ASS) $(FLAGS) $< -o $@
 
+bonus: $(BONUS_OBJ)
+	ar rc libasm.a $(BONUS_OBJ)
+	ranlib libasm.a
+
 clean:
 	rm -rf *.o
 
 fclean: clean
 	rm -rf libasm.a
 
-re:	fclean all
+.PHONY: all clean fclean re
